@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import Table from './Table'
-
-
-
-
 import './App.css';
 
 class App extends Component {
@@ -14,7 +10,6 @@ class App extends Component {
       title : {
         unDone: "My To Do Shopping List",
         done: "Done List"
-
       },
 
       items: ['Chicken', 'Eggs', 'Milk', 'Chocolate', 'Tomatoes'],
@@ -26,9 +21,8 @@ class App extends Component {
 
   }
 
-  toogleMove = (e,index)=>{
-
-    let value = e.target.firstChild.nodeValue;
+  moveItem = (index)=>{
+    let value = this.state.items[index];
   //Move item from unccompleted table to completed table
     this.setState ({
       items: [
@@ -36,22 +30,14 @@ class App extends Component {
               ...this.state.items.slice(index+1)
             ]
     })
-
-
-    if (value !=="×") {
-
       this.setState({
         items2:[...this.state.items2, value],
-
       })
-    }
-
-
   }
 
   //Move item from completed table to unccompleted Table
-  undoMove=(e,index)=>{
-    let value = e.target.firstChild.nodeValue;
+  undoMove=(index)=>{
+    let value = this.state.items2[index];
 
 // delete items from completed table
     this.setState({
@@ -62,15 +48,12 @@ class App extends Component {
     })
 // add the item to unccompleted table
 
-  if (value !=="×") {
     this.setState({
       items:[...this.state.items, value ]
     })
   }
-  }
 // updating the input content
   changeInput=(e)=>{
-
     this.setState({
       newItem: e.target.value
     })
@@ -95,26 +78,35 @@ class App extends Component {
     })
   }
 
-
+ deleteItem = (nameItems, index) =>{
+   this.setState ({
+     [nameItems]: [
+             ...this.state[nameItems].slice(0,index),
+             ...this.state[nameItems].slice(index+1)
+           ]
+   })
+ }
 
   render() {
     return (
-    <form id="myForm" onSubmit={this.addItem} >
-      <Table
-        title = {this.state.title.unDone}
-        items={this.state.items}
-        toogleMove = {this.toogleMove}
-        newItem= {this.state.newItem}
-        changeInput={this.changeInput}
-        addItem={this.addItem}
-        showMess={this.state.showMess} />
-      <div className="done-tb">
-        <Table
-          title = {this.state.title.done}
-          items2 = {this.state.items2}
-          undoMove = {this.undoMove}  />
-      </div>
-    </form>
+      <div>
+          <Table
+            title = {this.state.title.unDone}
+            items={this.state.items}
+            moveItem = {this.moveItem}
+            newItem= {this.state.newItem}
+            changeInput={this.changeInput}
+            showMess={this.state.showMess}
+            addItem= {this.addItem}
+            deleteItem={this.deleteItem}/>
+          <div className="done-tb">
+            <Table
+              title = {this.state.title.done}
+              items2 = {this.state.items2}
+              undoMove = {this.undoMove}
+              deleteItem={this.deleteItem} />
+          </div>
+        </div>
 
     );
   }

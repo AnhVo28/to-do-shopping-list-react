@@ -4,14 +4,15 @@ import ListItems from './ListItems'
 
 
 
-const Table = ({newItem, changeInput, addItem, showMess, title, toogleMove, undoMove, items, items2}) => {
+const Table = ({newItem, changeInput, showMess, title, moveItem, undoMove, items, items2, addItem, deleteItem}) => {
 
   const formEnter = title === "My To Do Shopping List"
   ? <InputForm
   newItem = {newItem}
   handleChangeInput={changeInput}
-  handleAddItem={addItem}
-  showMess={showMess}/>
+  showMess={showMess}
+  addItem={addItem}
+  />
   :
   false;
 
@@ -26,9 +27,10 @@ return(
     <ListItems
       title = {title}
       items = {items}
-      handleToogleMove = {toogleMove}
+      handleMoveItem = {moveItem}
       items2 = {items2}
       handleUndoMove = {undoMove}
+      deleteItem={deleteItem}
       />
   </div>
 )

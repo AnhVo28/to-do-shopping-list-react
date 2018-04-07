@@ -1,25 +1,26 @@
 import React from 'react'
 
 
-const ListItems = ({items, handleToogleMove, title, items2, handleUndoMove}) =>{
+const ListItems = ({items, handleMoveItem, title, items2, handleUndoMove, deleteItem}) =>{
   if (title === "My To Do Shopping List") {
 
     return (
       <ul id="myUL">
-        {items.map((item, index)=><li
+        {items.map((item, index)=>(<div className="row"><li
           key ={index}
-          onClick = {(e)=>handleToogleMove(e,index)}
-          >{item}<span className="close">×</span></li>)}
+          onClick = {()=>handleMoveItem(index)}
+          >{item}</li><span className="close" onClick={()=>deleteItem('items',index)} >×</span></div>))}
      </ul>
     )
   }
 
   return (
     <ul id="myUL2">
-      {items2.map((item, index)=><li
+      {items2.map((item, index)=>
+        (<div className="row"><li
         key ={index} className="checked"
-        onClick={(e)=>handleUndoMove(e,index)
-        }>{item}<span className="close">×</span></li>)}
+        onClick={()=>handleUndoMove(index)
+        }>{item}</li><span className="close" onClick={()=>deleteItem('items2',index)} >×</span></div>))}
    </ul>
   )
 }

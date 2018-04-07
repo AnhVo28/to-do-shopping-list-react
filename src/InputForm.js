@@ -2,9 +2,9 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 
-const InputForm =({newItem, handleAddItem, handleChangeInput, showMess})=> {
+const InputForm =({newItem, handleChangeInput, showMess, addItem})=> {
 
-    const Button = styled.span`
+    const Button = styled.button`
         padding: 10px;
         width: 25%;
         background: #d9d9d9;
@@ -19,11 +19,11 @@ const InputForm =({newItem, handleAddItem, handleChangeInput, showMess})=> {
     const feedback = showMess ? <p id="feedback">You can't leave this empty.</p> : false;
 
     return(
-      <div>
+        <form id="myForm" onSubmit={addItem} >
         <input type="text" id="myInput" placeholder="Item..." value={newItem} onChange={(e)=>handleChangeInput(e)}/>
-        <Button id="btn-add" className="addBtn" onClick={handleAddItem} >Add</Button>
+        <Button type="submit" id="btn-add" className="addBtn" >Add</Button>
     {feedback}
-      </div>
+  </form>
     )
 
 }
